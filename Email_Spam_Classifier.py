@@ -9,10 +9,6 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 
 
-# Setup Logger
-
-
-
 # Get the data from the csv file.
 data = pd.read_csv("Dataset/combined_spam.csv")
 
