@@ -63,8 +63,7 @@ if st.button("Predict"):
         probs = clf.predict_proba(X)[0]
         col1.markdown(f"**Probabilities:** Ham: {probs[0]:.3f}, Spam: {probs[1]:.3f}")
 
-    with torch.no_grad():
-        roberta_result = roberta_model(text)[0]
+    roberta_result = roberta_model(text)[0]
     col2.markdown("### RoBERTa Prediction")
     col2.markdown(f"**Prediction:** {roberta_result['label']}")
     
