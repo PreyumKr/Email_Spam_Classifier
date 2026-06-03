@@ -1,9 +1,16 @@
-FROM python:3.12-slim
+FROM python:3.10-slim
+
+ARG PYTORCH_VARIANT=
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements${PYTORCH_VARIANT:+-$PYTORCH_VARIANT}.txt requirements.txt
+RUN if [ -z "$PYTORCH_VARIANT" ]; then \
+      pip install --no-cache-dir -r requirements.txt; \
+    else \
+      pip install --no-cache-dir -r requirements.txt; \
+      pip install torch torchvision --index-url https://download.pytorch.org/whl/cu132; \
+    fi
 
 COPY models /app/models
 COPY Load_Model.py /app

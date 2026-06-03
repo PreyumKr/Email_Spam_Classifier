@@ -58,21 +58,24 @@ if st.button("Predict"):
     pred = clf.predict(X)[0]
     label = "spam" if pred == 1 else "ham"
     col1.markdown("### Naive Bayes Prediction")
-    col1.markdown(f"**Prediction:** {label}")
+    col1.markdown(f"**Prediction:** {label.capitalize()}")
     if hasattr(clf, "predict_proba"):
         probs = clf.predict_proba(X)[0]
-        col1.markdown(f"**Probabilities:** Ham: {probs[0]:.3f}, Spam: {probs[1]:.3f}")
+        col1.write(f"Ham Probability: `{probs[0]:.3f}`")
+        col1.write(f"Spam Probability: `{probs[1]:.3f}`")
 
     roberta_result = roberta_model(text)[0]
     col2.markdown("### RoBERTa Prediction")
-    col2.markdown(f"**Prediction:** {roberta_result['label']}")
+    col2.markdown(f"**Prediction:** {roberta_result['label'].capitalize()}")
     
     # Display probabilities based on the predicted label
-    label = roberta_result['label'].lower()
-    if label == 'ham':
+    label = roberta_result['label'].upper()
+    if label == 'HAM':
         ham_score = roberta_result['score']
         spam_score = 1 - roberta_result['score']
-    else:  # spam
+    else:  # SPAM
         ham_score = 1 - roberta_result['score']
         spam_score = roberta_result['score']
-    col2.markdown(f"**Probabilities:** Ham: {ham_score:.3f}, Spam: {spam_score:.3f}")
+    
+    col2.write(f"Ham Probability: `{ham_score:.3f}`")
+    col2.write(f"Spam Probability: `{spam_score:.3f}`")
